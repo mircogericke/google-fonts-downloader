@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GoogleFontDownloader": {
+      "commandName": "Project",
+      "commandLineArgs": "Lobster"
+    }
+  }
+}
