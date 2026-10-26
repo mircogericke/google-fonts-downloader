@@ -11,7 +11,7 @@ internal class DownloadFontCommand(ParseResult args)
 
     public static readonly Argument<List<string>> Family = new("family")
     {
-        Description = "Disable generation of media files, including resizing.",
+        Description = "The font families to download.",
         Arity = ArgumentArity.OneOrMore
     };
 
@@ -53,9 +53,9 @@ internal class DownloadFontCommand(ParseResult args)
         foreach (var (url, fileName) in fontUrls)
         {
             Console.WriteLine($"Downloading {fileName}");
-            var stream = await http.GetStreamAsync(url);
+            var stream = await http.GetStreamAsync(url, cancellationToken);
             await using var file = File.OpenWrite(Path.Join("fonts", fileName));
-            await stream.CopyToAsync(file);
+            await stream.CopyToAsync(file, cancellationToken);
         }
 
         Console.WriteLine("done.");

@@ -19,6 +19,3 @@ internal partial class CssParser
 	[GeneratedRegex(@"url\((?<value>.+?)\)")]
 	public static partial Regex Url { get; }
 }
-
-
-
