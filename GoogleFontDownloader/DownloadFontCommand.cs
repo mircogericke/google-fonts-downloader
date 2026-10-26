@@ -22,7 +22,7 @@ internal class DownloadFontCommand(ParseResult args)
         Console.WriteLine("Processing style..");
         Directory.CreateDirectory("fonts");
 
-        await using var stylesheet = new StreamWriter(Path.Join("fonts", $"fonts.css"));
+        await using var stylesheet = new StreamWriter(Path.Join("fonts", $"index.css"));
         var fontUrls = new List<(string Url, string FileName)>();
 
         foreach (Match match in CssParser.FontFace.Matches(css))
@@ -65,13 +65,13 @@ internal class DownloadFontCommand(ParseResult args)
     private async Task<string> DownloadStyleSheet(CancellationToken cancellationToken)
     {
         // use modern browser user agent, otherwise server will generate true-type fonts
-        http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0");
+        http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0");
         return await http.GetStringAsync(BuildUri(), cancellationToken);
     }
 
     private Uri BuildUri()
     {
-        var builder = new UriBuilder("https://fonts.googleapis.com/css");
+        var builder = new UriBuilder("https://fonts.googleapis.com/css2");
         NameValueCollection query = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
         foreach (var family in families)
@@ -81,5 +81,4 @@ internal class DownloadFontCommand(ParseResult args)
 
         return builder.Uri;
     }
-
 }
